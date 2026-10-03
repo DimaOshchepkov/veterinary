@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block body %}
+    {% set content %}
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm, {'attr': {'class': 'space-y-5'}}) }}
+
+        {{ form_row(registrationForm.email, {'label': 'Email'}) }}
+        {{ form_row(registrationForm.plainPassword, {'label': 'Пароль'}) }}
+
+        {{ form_row(registrationForm.agreeTerms, {'label': 'Я соглашаюсь с условиями использования'}) }}
+
+        <div class="pt-2">
+            {% include 'components/button_primary.html.twig' with {label: 'Зарегистрироваться'} %}
+        </div>
+
+        {{ form_end(registrationForm) }}
+    {% endset %}
+
+    {% set footer %}
+        <p class="mt-8 text-center text-sm text-gray-500">
+            Уже есть аккаунт?
+            <a href="{{ path('app_login') }}" class="font-medium text-gray-900 hover:text-gray-700 transition-colors underline underline-offset-4">
+                Войти в систему
+            </a>
+        </p>
+    {% endset %}
+
+    {% include 'components/form_card.html.twig' with {
+        title: 'Регистрация',
+        content: content,
+        footer: footer
+    } %}
+{% endblock %}

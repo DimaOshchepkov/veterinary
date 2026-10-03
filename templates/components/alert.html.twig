@@ -1,0 +1,5 @@
+{% if message %}
+    <div class="mb-6 p-3 bg-{{ type|default('red') }}-50 text-{{ type|default('red') }}-600 text-sm rounded-md border border-{{ type|default('red') }}-100{% if center is defined and center %} text-center{% endif %}">
+        {{ message|raw }}
+    </div>
+{% endif %}

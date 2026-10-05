@@ -1,0 +1,33 @@
+{% set title = title|default('Удалить запись?') %}
+{% set confirm_text = confirm_text|default('Удалить') %}
+{% set cancel_text = cancel_text|default('Отмена') %}
+{% set confirm_button_class = confirm_button_class|default('bg-red-600 hover:bg-red-700') %}
+{% set controller_name = controller_name|default('delete-modal') %}
+
+<dialog data-{{ controller_name }}-target="modal"
+        class="rounded-lg p-0 shadow-xl w-full max-w-md border-0 backdrop:bg-black/40 fixed inset-0 m-auto">
+    <form method="post" data-{{ controller_name }}-target="form">
+        <div class="p-6">
+            <h3 class="text-lg font-semibold text-gray-900">{{ title }}</h3>
+            <p class="mt-2 text-sm text-gray-600">
+                Вы уверены, что хотите удалить <strong data-{{ controller_name }}-target="name"></strong>?
+                Это действие нельзя отменить.
+            </p>
+        </div>
+        <div class="flex justify-end gap-2 bg-gray-50 px-6 py-3 rounded-b-lg">
+            <button type="button"
+                    data-action="click->{{ controller_name }}#close"
+                    class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+                {{ cancel_text }}
+            </button>
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token"
+                   data-{{ controller_name }}-target="token"
+                   data-controller="csrf-protection">
+            <button type="submit"
+                    class="px-4 py-2 text-sm font-medium text-white rounded-md {{ confirm_button_class }}">
+                {{ confirm_text }}
+            </button>
+        </div>
+    </form>
+</dialog>

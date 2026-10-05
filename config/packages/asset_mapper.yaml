@@ -4,6 +4,9 @@ framework:
         paths:
             - assets/
         missing_import_mode: strict
+        excluded_patterns:
+            - '*/react/**/*.tsx'
+            - '*/react/**/*.ts'
 
 when@prod:
     framework:

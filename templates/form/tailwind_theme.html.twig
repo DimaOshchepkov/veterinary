@@ -79,3 +79,43 @@
         {{ label|trans(label_translation_parameters, translation_domain) }}
     </button>
 {% endblock %}
+
+
+{% block choice_widget_expanded %}
+    <div class="flex items-center gap-4 mt-1">
+        {% for child in form %}
+            <label class="inline-flex items-center cursor-pointer">
+                {{ form_widget(child, {'attr': {'class': 'h-4 w-4 border-gray-300 text-gray-900 focus:ring-gray-900'}}) }}
+                <span class="ml-2 text-sm text-gray-700">{{ child.vars.label }}</span>
+            </label>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block choice_widget_collapsed %}
+    {% set attr = attr|merge({
+        'class': (attr.class|default('') ~ ' block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-900 focus:ring-gray-900 sm:text-sm px-3 py-2.5 border transition-colors bg-white appearance-none cursor-pointer')|trim
+    }) %}
+    <select {{ block('widget_attributes') }}>
+        {% if placeholder is not none %}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>
+                {{ placeholder != '' ? placeholder|trans({}, translation_domain) }}
+            </option>
+        {% endif %}
+        {% for group_label, choice in choices %}
+            {% if choice is iterable %}
+                <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+                    {% for option in choice %}
+                        <option value="{{ option.value }}"{% if option.attr %}{% with { attr: option.attr } %}{{ block('attributes') }}{% endwith %}{% endif %}{% if option.value in value %} selected="selected"{% endif %}>
+                            {{ option.label|trans({}, translation_domain) }}
+                        </option>
+                    {% endfor %}
+                </optgroup>
+            {% else %}
+                <option value="{{ choice.value }}"{% if choice.attr %}{% with { attr: choice.attr } %}{{ block('attributes') }}{% endwith %}{% endif %}{% if choice.value in value %} selected="selected"{% endif %}>
+                    {{ choice.label|trans({}, translation_domain) }}
+                </option>
+            {% endif %}
+        {% endfor %}
+    </select>
+{% endblock %}

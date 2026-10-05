@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ action == 'new' ? 'Добавить питомца' : 'Редактировать питомца' }}{% endblock %}
+
+{% block body %}
+    {% form_theme form 'form/tailwind_theme.html.twig' %}
+
+    {% set content %}
+        {{ form_start(form) }}
+
+        <div class="space-y-5">
+            {{ form_row(form.name) }}
+
+            <div class="grid grid-cols-2 gap-4">
+                {{ form_row(form.species) }}
+                {{ form_row(form.gender) }}
+            </div>
+
+            {{ form_row(form.birthDate) }}
+            {{ form_row(form.breed) }}
+        </div>
+
+        <div class="flex items-center justify-between gap-3 mt-8 pt-6 border-t border-gray-100">
+            <a href="{{ path('app_pet_index') }}"
+               class="text-sm text-gray-600 hover:text-gray-900 hover:underline transition-colors">
+                ← Назад к списку
+            </a>
+            <button type="submit"
+                    class="px-6 py-2.5 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 transition-colors">
+                {{ action == 'new' ? 'Добавить' : 'Сохранить изменения' }}
+            </button>
+        </div>
+
+        {{ form_end(form) }}
+    {% endset %}
+
+    {% include 'components/form_card.html.twig' with {
+        title: action == 'new' ? 'Новый питомец' : 'Редактирование: ' ~ pet.name,
+        content: content
+    } %}
+{% endblock %}

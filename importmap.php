@@ -28,4 +28,19 @@ return [
     'react' => [
         'version' => '19.3.0',
     ],
+    'axios' => [
+        'version' => '1.20.0',
+    ],
+    'react-hook-form' => [
+        'version' => '7.89.0',
+    ],
+    '@/utils/api' => [
+        'path' => './assets/build/react/utils/api.js',
+    ],
+    '@/react/controllers/AppointmentForm' => [
+        'path' => './assets/build/react/controllers/AppointmentForm.js',
+    ],
+    '@symfony/ux-react' => [
+        'version' => '3.5.1',
+    ],
 ];

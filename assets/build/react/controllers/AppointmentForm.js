@@ -66,11 +66,15 @@ export default function AppointmentForm({
   const location = watch('location');
   const onSubmit = async data => {
     try {
-      await api.post('/appointments', {
+      const response = await api.post('/appointments', {
         ...data,
         pet: Number(data.pet),
         service: Number(data.service)
       });
+      const responseData = response?.data ?? response;
+      if (responseData?.redirectUrl) {
+        window.location.href = response.data.redirectUrl;
+      }
     } catch (e) {
       applyServerErrors(e, setError);
     }

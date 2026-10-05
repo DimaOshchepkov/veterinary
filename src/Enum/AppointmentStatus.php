@@ -19,22 +19,27 @@ enum AppointmentStatus: string
         };
     }
 
+    /** @return list<self> */
+    public static function activeCases(): array
+    {
+        return [self::NEW, self::CONFIRMED];
+    }
+
+    /** @return list<self> */
+    public static function inactiveCases(): array
+    {
+        return [self::COMPLETED, self::CANCELLED];
+    }
 
     public function isActive(): bool
     {
-        return match($this) {
-            self::NEW, self::CONFIRMED => true,
-            self::COMPLETED, self::CANCELLED => false,
-        };
+        return in_array($this, self::activeCases());
     }
 
 
     public function isFinal(): bool
     {
-        return match($this) {
-            self::COMPLETED, self::CANCELLED => true,
-            default => false,
-        };
+        return in_array($this, self::inactiveCases());
     }
 
     public function canTransitionTo(self $target): bool

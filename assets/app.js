@@ -1,18 +1,17 @@
-import { registerReactControllerComponents } from '@symfony/ux-react';
-
 import './stimulus_bootstrap.js';
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
+import { registerReactControllerComponents } from '@symfony/ux-react';
 import './styles/app.css';
 import * as Turbo from '@hotwired/turbo';
+
+import * as AppointmentFormModule from '@/react/controllers/AppointmentForm';
+
+console.log('🔍 AppointmentFormModule:', AppointmentFormModule);
+console.log('🔍 AppointmentFormModule.default:', AppointmentFormModule.default);
+
 Turbo.start();
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+registerReactControllerComponents({
+    './AppointmentForm.tsx': AppointmentFormModule,
+});
 
-
-
-registerReactControllerComponents();
+console.log('✅ Компоненты зарегистрированы');

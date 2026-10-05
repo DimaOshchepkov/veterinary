@@ -33,15 +33,15 @@
     </head>
     <body class="min-h-screen flex flex-col bg-gray-50">
 
-    {# ХЕДЕР #}
+
     <header class="bg-indigo-600 text-white shadow-lg">
         <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="{{ path('app_home') }}" class="text-2xl font-bold">Мой сайт</a>
+            <div  class="text-2xl font-bold">Ветеринарная клиника</div>
             <div class="space-x-4">
-                <a href="{{ path('app_home') }}" class="hover:text-indigo-200">Главная</a>
+                <a href="{{ path('app_appointment_index') }}" class="hover:text-indigo-200">Услуги</a>
 
                 {% if app.user %}
-                    <a href="{{ path('app_home') }}" class="hover:text-indigo-200">Профиль</a>
+                    <a href="{{ path('app_pet_index') }}" class="hover:text-indigo-200">Питомцы</a>
                     <a href="{{ path('app_logout') }}" class="hover:text-indigo-200">Выход</a>
                 {% else %}
                     <a href="{{ path('app_login') }}" class="hover:text-indigo-200">Вход</a>
@@ -51,18 +51,13 @@
         </nav>
     </header>
 
-    {# ОСНОВНОЙ КОНТЕНТ #}
     <main class="flex-grow container mx-auto px-4 py-8">
         {% block body %}{% endblock %}
     </main>
 
-    {# ФУТЕР #}
     <footer class="bg-gray-800 text-white py-6 mt-auto">
         <div class="container mx-auto px-4 text-center">
             <p>&copy; {{ "now"|date("Y") }} Ветеринарная клиника. Все права защищены.</p>
-            <p class="text-sm text-gray-400 mt-2">
-                Сделано с ❤️ на Symfony
-            </p>
         </div>
     </footer>
 

@@ -1,0 +1,16 @@
+{#
+Использование:
+{% include 'components/cancel_button.html.twig' with {
+    url: path('app_appointment_cancel', {'id': appointment.id}),
+    name: appointment.petDisplayName
+} %}
+#}
+
+<button type="button"
+        data-action="click->cancel-modal#open"
+        data-url="{{ url }}"
+        data-name="{{ name }}"
+        data-token="{{ csrf_token('submit') }}"
+        class="text-red-600 hover:text-red-800 hover:underline font-medium">
+    {{ label|default('Отменить') }}
+</button>

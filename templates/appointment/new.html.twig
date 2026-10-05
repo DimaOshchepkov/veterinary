@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Новая запись{% endblock %}
+
+{% block body %}
+    <div class="max-w-2xl mx-auto px-4 py-8">
+
+        {% include 'components/flash_messages.html.twig' %}
+
+        <div class="mb-6">
+            <h1 class="text-2xl font-semibold text-gray-900">Создать запись к ветеринару</h1>
+            <p class="mt-2 text-sm text-gray-600">Заполните форму, чтобы записаться на прием</p>
+        </div>
+        <div {{ react_component('AppointmentForm', {pets: pets, services: services}) }}>
+
+        <div class="mt-6">
+            <a href="{{ path('app_appointment_index') }}" class="text-sm text-gray-600 hover:text-gray-900">
+                ← Вернуться к списку записей
+            </a>
+        </div>
+    </div>
+{% endblock %}

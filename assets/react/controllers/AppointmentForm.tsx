@@ -70,11 +70,16 @@ export default function AppointmentForm({pets, services}: { pets: Option[]; serv
 
     const onSubmit: SubmitHandler<AppointmentFormData> = async (data) => {
         try {
-            await api.post('/appointments', {
+            const response = await api.post('/appointments', {
                 ...data,
                 pet: Number(data.pet),
                 service: Number(data.service),
             });
+            const responseData = response?.data ?? response;
+
+            if (responseData?.redirectUrl) {
+                window.location.href = response.data.redirectUrl;
+            }
         } catch (e) {
             applyServerErrors(e, setError);
         }

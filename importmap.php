@@ -43,4 +43,16 @@ return [
     '@symfony/ux-react' => [
         'version' => '3.5.1',
     ],
+    'react-dom' => [
+        'version' => '19.3.0',
+    ],
+    'react-dom/client' => [
+        'version' => '19.3.0',
+    ],
+    'react/jsx-runtime' => [
+        'version' => '19.3.0',
+    ],
+    'scheduler' => [
+        'version' => '0.28.0',
+    ],
 ];

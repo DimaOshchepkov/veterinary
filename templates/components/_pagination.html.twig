@@ -1,0 +1,31 @@
+{% set route = route|default(null) %}
+{% set queryParams = queryParams|default({}) %}
+
+<nav class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6" aria-label="Pagination">
+    <div class="hidden sm:block">
+        <p class="text-sm text-gray-700">
+            {% set offsetStart = ((pagination.currentPage - 1) * pagination.maxPerPage) + 1 %}
+            {% set offsetEnd = min(pagination.currentPage * pagination.maxPerPage, pagination.nbResults) %}
+
+            Показано <span class="font-medium">{{ offsetStart }}</span>
+            – <span class="font-medium">{{ offsetEnd }}</span>
+            из <span class="font-medium">{{ pagination.nbResults }}</span> результатов
+        </p>
+    </div>
+
+    <div class="flex flex-1 justify-center sm:justify-end gap-1 flex-wrap">
+        {% for page in 1..pagination.nbPages %}
+            {% if page == pagination.currentPage %}
+                <span class="inline-flex items-center rounded-md border border-gray-900 bg-gray-900 px-3 py-1.5 text-sm font-medium text-white">
+                    {{ page }}
+                </span>
+            {% else %}
+                {% set pageParams = queryParams|merge({'page': page}) %}
+                <a href="{{ path(route, pageParams) }}"
+                   class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    {{ page }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</nav>

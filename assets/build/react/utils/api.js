@@ -6,7 +6,7 @@ function generateToken() {
   return btoa(String.fromCharCode(...bytes));
 }
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: '/',
   withCredentials: true
 });
 api.interceptors.request.use(config => {

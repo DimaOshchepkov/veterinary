@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Мои записи{% endblock %}
+
+{% block body %}
+    <div class="max-w-6xl mx-auto px-4 py-8" data-controller="cancel-modal">
+
+        {% include 'components/flash_messages.html.twig' %}
+
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+            <h1 class="text-2xl font-semibold text-gray-900">Мои записи к ветеринару</h1>
+            <a href="{{ path('app_appointment_new') }}"
+               class="inline-flex justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700">
+                Записаться
+            </a>
+        </div>
+
+        <form method="GET" class="flex flex-wrap items-end gap-4 mb-6 bg-gray-50 p-6 rounded-lg border border-gray-200">
+            <div>
+                <label for="status" class="block text-xs font-medium text-gray-500 uppercase mb-3">Статус</label>
+                <select name="status" id="status" onchange="this.form.submit()"
+                        class="rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 text-sm py-2 px-3">
+                    <option value="active" {{ active ? 'selected' : '' }}>Активные</option>
+                    <option value="inactive" {{ not active ? 'selected' : '' }}>Архив (Завершенные/Отмененные)</option>
+                </select>
+            </div>
+            <div>
+                <label for="limit" class="block text-xs font-medium text-gray-500 uppercase mb-3">На странице</label>
+                <select name="limit" id="limit" onchange="this.form.submit()"
+                        class="rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 text-sm py-2 px-3">
+                    {% for l in limits %}
+                        <option value="{{ l }}" {{ limit == l ? 'selected' : '' }}>{{ l }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+
+        {% embed 'components/data_table.html.twig' with {
+            headers: [
+                {label: 'Дата и время', class: 'w-40'},
+                {label: 'Питомец'},
+                {label: 'Услуга'},
+                {label: 'Место'},
+                {label: 'Статус', class: 'w-32'},
+                {label: 'Действия', class: 'text-right w-32'}
+            ],
+            rows: appointments,
+            pagination: appointments,
+            emptyMessage: active ? 'У вас пока нет активных записей.' : 'В архиве пока ничего нет.',
+            emptyAction: {url: path('app_appointment_new')|default('#'), label: 'Создать запись'},
+            route: 'app_appointment_index',
+            queryParams: app.request.query.all()
+        } %}
+            {% block table_row %}
+                <tr class="hover:bg-gray-50 transition-colors">
+
+                    <td class="px-4 py-3 text-sm text-gray-900">
+                        <div class="font-medium">{{ row.appointmentDate|date('d.m.Y') }}</div>
+                        <div class="text-gray-500">{{ row.appointmentTime|date('H:i') }}</div>
+                    </td>
+
+
+                    <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                        {{ row.petDisplayName }}
+                    </td>
+
+                    <td class="px-4 py-3 text-sm text-gray-600">
+                        {{ row.service.name }}
+                    </td>
+
+                    <td class="px-4 py-3 text-sm text-gray-600">
+                        <div class="font-medium">{{ row.locationLabel }}</div>
+                        {% if row.address %}
+                            <div class="text-xs text-gray-500 mt-1 truncate max-w-[150px]" title="{{ row.address }}">
+                                {{ row.address }}
+                            </div>
+                        {% endif %}
+                    </td>
+
+                    <td class="px-4 py-3 text-sm">
+                        {% set statusValue = row.status.value|lower %}
+                        {% if statusValue == 'cancelled' %}
+                            {% set statusColor = 'bg-red-100 text-red-800' %}
+                        {% elseif statusValue == 'completed' %}
+                            {% set statusColor = 'bg-gray-100 text-gray-800' %}
+                        {% else %}
+                            {% set statusColor = 'bg-green-100 text-green-800' %}
+                        {% endif %}
+
+                        <span
+                            class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold leading-5 {{ statusColor }}">
+                            {{ row.statusLabel }}
+                        </span>
+                    </td>
+
+                    <td class="px-4 py-3 text-right text-sm space-x-2">
+                        {% if row.isEditable %}
+                            {% include 'components/cancel_button.html.twig' with {
+                                url: path('app_appointment_cancel', {'id': row.id}),
+                                name: row.petDisplayName
+                            } %}
+                        {% else %}
+                            <span class="text-gray-400 text-xs italic">Недоступно</span>
+                        {% endif %}
+                    </td>
+
+                </tr>
+            {% endblock %}
+        {% endembed %}
+
+        {% include 'components/confirm_cancel_modal.html.twig' %}
+    </div>
+{% endblock %}

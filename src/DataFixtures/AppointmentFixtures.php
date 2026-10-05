@@ -16,11 +16,11 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $yesterday = (new \DateTimeImmutable())->modify('-1 day');
-        $lastWeek = (new \DateTimeImmutable())->modify('-7 days');
-        $tomorrow = (new \DateTimeImmutable())->modify('+1 day');
-        $nextWeek = (new \DateTimeImmutable())->modify('+7 days');
-        $inTwoWeeks = (new \DateTimeImmutable())->modify('+14 days');
+        $yesterday = new \DateTimeImmutable()->modify('-1 day');
+        $lastWeek = new \DateTimeImmutable()->modify('-7 days');
+        $tomorrow = new \DateTimeImmutable()->modify('+1 day');
+        $nextWeek = new \DateTimeImmutable()->modify('+7 days');
+        $inTwoWeeks = new \DateTimeImmutable()->modify('+14 days');
 
         $appointmentsData = [
             [
@@ -81,7 +81,7 @@ class AppointmentFixtures extends Fixture implements DependentFixtureInterface
                 'serviceRef' => 'service-1',
                 'location' => AppointmentLocation::SALON,
                 'address' => null,
-                'date' => (new \DateTimeImmutable())->modify('+' . ($i + 1) . ' days'),
+                'date' => new \DateTimeImmutable()->modify('+' . ($i + 1) . ' days'),
                 'time' => new \DateTimeImmutable(sprintf('%02d:00', 9 + ($i % 10))),
                 'status' => AppointmentStatus::NEW,
                 'ownerRef' => 'user-client-3',

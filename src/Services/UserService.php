@@ -9,11 +9,11 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserService
+readonly class UserService
 {
     public function __construct(
-        private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly EntityManagerInterface      $entityManager,
+        private UserPasswordHasherInterface $passwordHasher,
+        private EntityManagerInterface      $entityManager,
     ) {}
 
     public function createUser(string $email, string $plainPassword, array $roles = ['ROLE_USER']): User

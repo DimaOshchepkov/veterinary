@@ -8,7 +8,7 @@ function generateToken() {
     return btoa(String.fromCharCode(...bytes));
 }
 
-const api = axios.create({ baseURL: '/api', withCredentials: true });
+const api = axios.create({ baseURL: '/', withCredentials: true });
 
 api.interceptors.request.use((config) => {
     const method = (config.method ?? 'get').toLowerCase();

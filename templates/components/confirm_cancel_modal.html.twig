@@ -1,0 +1,27 @@
+<dialog data-cancel-modal-target="modal"
+        class="rounded-lg p-0 shadow-xl w-full max-w-md border-0 backdrop:bg-black/40 fixed inset-0 m-auto">
+    <form method="post" data-cancel-modal-target="form">
+        <div class="p-6">
+            <h3 class="text-lg font-semibold text-gray-900">Отменить запись?</h3>
+            <p class="mt-2 text-sm text-gray-600">
+                Вы уверены, что хотите отменить запись для
+                <strong data-cancel-modal-target="name"></strong>?
+                Это действие нельзя будет отменить.
+            </p>
+        </div>
+        <div class="flex justify-end gap-2 bg-gray-50 px-6 py-3 rounded-b-lg">
+            <button type="button"
+                    data-action="click->cancel-modal#close"
+                    class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+                Нет, оставить
+            </button>
+            <input type="hidden" name="_token"
+                   data-cancel-modal-target="token"
+                   data-controller="csrf-protection">
+            <button type="submit"
+                    class="px-4 py-2 text-sm font-medium text-white rounded-md bg-red-600 hover:bg-red-700">
+                Да, отменить
+            </button>
+        </div>
+    </form>
+</dialog>

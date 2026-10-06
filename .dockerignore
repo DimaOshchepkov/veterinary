@@ -11,8 +11,9 @@ compose*.yaml
 .dockerignore
 
 # Secrets & env files
-.env
-.env.*
+.env.local
+.env.*.local
+.env.local.php
 *.pem
 *.key
 

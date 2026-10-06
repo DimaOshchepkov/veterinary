@@ -4,6 +4,7 @@
 
 ```bash
 git clone https://github.com/DimaOshchepkov/veterinary.git
+cd veterinary
 docker compose up --build -d
 docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
 ```

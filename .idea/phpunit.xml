@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PHPUnit">
+    <option name="directories">
+      <list>
+        <option value="\\wsl.localhost\Ubuntu\home\dima\projects\veterinary\tests" />
+      </list>
+    </option>
+  </component>
+</project>

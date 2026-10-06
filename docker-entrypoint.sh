@@ -20,12 +20,8 @@ if [ "$1" = "php-fpm" ]; then
 
     php bin/console importmap:install --no-interaction
 
-    if [ "$APP_ENV" = "prod" ]; then
-      php bin/console asset-map:compile --no-interaction
-    else
-      # в dev ассеты отдаёт Symfony динамически, старая компиляция мешает
-      rm -rf public/assets
-    fi
+    php bin/console asset-map:compile --no-interaction
+
   fi
 
   if [ "${RUN_MIGRATIONS:-1}" = "1" ]; then

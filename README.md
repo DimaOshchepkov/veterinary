@@ -3,7 +3,9 @@
 ## Get started
 
 ```bash
+git clone https://github.com/DimaOshchepkov/veterinary.git
 docker compose up --build -d
+docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
 ```
 Приложение будет доступно на адресе http:localhost:8000/login
 

@@ -22,7 +22,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: app_appointments
+                default_target_path: app_appointment_index
                 enable_csrf: true
             logout:
                 path: app_logout

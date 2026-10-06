@@ -2,25 +2,26 @@ services:
   php:
     build:
       context: .
-      target: dev
+      target: production
       args:
         USER_UID: ${UID:-1000}
         USER_GID: ${GID:-1000}
         TIMEZONE: Europe/Moscow
+    restart: unless-stopped
     ports:
       - "127.0.0.1:9000:9000"
     volumes:
-      - .:/var/www/project
+      - ./public:/var/www/project/public
     environment:
-      APP_SECRET: ${APP_SECRET:-dev-secret-change-me}
+      APP_ENV: prod
+      APP_DEBUG: "0"
+      APP_SECRET: ${APP_SECRET:-!ChangeMe!}
       DATABASE_URL: "mysql://app:${MYSQL_PASSWORD:-!ChangeMe!}@database:3306/app?serverVersion=8.4.0&charset=utf8mb4"
     depends_on:
       database:
         condition: service_healthy
     networks:
       - app_network
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
   database:
     image: mysql:${MYSQL_VERSION:-8.4}

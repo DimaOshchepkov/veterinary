@@ -1,6 +1,42 @@
+# Version control
 .git
-vendor
-var
+.gitignore
+.gitattributes
+.github
+
+# Docker files themselves
+Dockerfile*
+docker-compose*.yml
+compose*.yaml
+.dockerignore
+
+# Secrets & env files
+.env
+.env.*
+*.pem
+*.key
+
+# Editor & OS clutter
+.vscode
+.idea
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs & coverage
+*.log
+logs
+coverage
+.nyc_output
+
+# Node.js
 node_modules
-.env.local
-.env.*.local
+npm-debug.log*
+yarn-error.log
+.npm
+.next
+.nuxt
+.turbo
+
+# PHP (Composer)
+vendor

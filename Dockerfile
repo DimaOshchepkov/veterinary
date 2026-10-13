@@ -95,9 +95,10 @@ RUN { \
         echo "xdebug.idekey=PHPSTORM"; \
     } > "$PHP_INI_DIR/conf.d/zz-xdebug-dev.ini"
 
-RUN mkdir -p /var/www/project/var && chown -R symfony:symfony /var/www
+RUN sed -i "s/user = symfony/user = root/; s/group = symfony/group = root/" \
+        /usr/local/etc/php-fpm.d/www.conf
 
-USER symfony
+CMD ["php-fpm", "-R"]
 
 FROM base AS production
 

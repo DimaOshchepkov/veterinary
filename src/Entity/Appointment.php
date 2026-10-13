@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Enum\AppointmentLocation;
 use App\Enum\AppointmentStatus;
+use App\Exception\AppointmentCannotBeCancelledException;
 use App\Repository\AppointmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -210,11 +211,7 @@ class Appointment
     public function transitionTo(AppointmentStatus $newStatus): void
     {
         if (!$this->status->canTransitionTo($newStatus)) {
-            throw new \LogicException(sprintf(
-                'Недопустимый переход статуса: из "%s" в "%s".',
-                $this->status->label(),
-                $newStatus->label()
-            ));
+            throw new AppointmentCannotBeCancelledException();
         }
 
         $this->status = $newStatus;

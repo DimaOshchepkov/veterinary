@@ -1,0 +1,8 @@
+'Invalid credentials.': 'Неверный логин или пароль.'
+'The presented password is invalid.': 'Введенный пароль неверен.'
+'User account is disabled.': 'Учетная запись пользователя отключена.'
+'User account has expired.': 'Срок действия учетной записи истек.'
+'User account is locked.': 'Учетная запись пользователя заблокирована.'
+'User credentials have expired.': 'Срок действия учетных данных пользователя истек.'
+'No user found for the given username.': 'Пользователь с таким именем не найден.'
+'Invalid CSRF Token.': 'Форма устарела, обновите страницу.'

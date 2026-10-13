@@ -13,4 +13,5 @@ registerReactControllerComponents({
     './AppointmentForm.tsx': AppointmentFormModule,
 });
 
-console.log('✅ Компоненты зарегистрированы');
+
+registerReactControllerComponents();

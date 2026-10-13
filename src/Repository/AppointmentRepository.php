@@ -8,6 +8,8 @@ use App\Enum\AppointmentStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 
 /**
  * @extends ServiceEntityRepository<Appointment>
@@ -38,5 +40,33 @@ class AppointmentRepository extends ServiceEntityRepository
             ->orderBy('a.appointmentDate', $dir)
             ->addOrderBy('a.appointmentTime', $dir)
             ->addOrderBy('a.id', $dir);
+    }
+
+    /** @return Pagerfanta<Appointment> */
+    public function paginateByOwner(User $owner, bool $active, int $page, int $limit): Pagerfanta
+    {
+        $pager = new Pagerfanta(new QueryAdapter(
+            $this->findByOwnerQueryBuilder($owner, $active),
+            fetchJoinCollection: false,
+            useOutputWalkers: false,
+        ));
+
+        $pager->setMaxPerPage($limit);
+        $pager->setCurrentPage($page);
+
+        return $pager;
+    }
+
+    public function ownerHasAny(User $owner): bool
+    {
+        return $this->count(['owner' => $owner]) > 0;
+    }
+    public function save(Appointment $appointment, bool $flush = true): void
+    {
+        $this->getEntityManager()->persist($appointment);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
 }

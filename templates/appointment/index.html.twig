@@ -20,16 +20,16 @@
                 <label for="status" class="block text-xs font-medium text-gray-500 uppercase mb-3">Статус</label>
                 <select name="status" id="status" onchange="this.form.submit()"
                         class="rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 text-sm py-2 px-3">
-                    <option value="active" {{ active ? 'selected' : '' }}>Активные</option>
-                    <option value="inactive" {{ not active ? 'selected' : '' }}>Архив (Завершенные/Отмененные)</option>
+                    <option value="active" {{ query.active ? 'selected' : '' }}>Активные</option>
+                    <option value="inactive" {{ not query.active ? 'selected' : '' }}>Архив (Завершенные/Отмененные)</option>
                 </select>
             </div>
             <div>
                 <label for="limit" class="block text-xs font-medium text-gray-500 uppercase mb-3">На странице</label>
                 <select name="limit" id="limit" onchange="this.form.submit()"
                         class="rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 text-sm py-2 px-3">
-                    {% for l in limits %}
-                        <option value="{{ l }}" {{ limit == l ? 'selected' : '' }}>{{ l }}</option>
+                    {% for l in query.LIMITS %}
+                        <option value="{{ l }}" {{ query.limit == l ? 'selected' : '' }}>{{ l }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -46,7 +46,7 @@
             ],
             rows: appointments,
             pagination: appointments,
-            emptyMessage: active ? 'У вас пока нет активных записей.' : 'В архиве пока ничего нет.',
+            emptyMessage: query.active ? 'У вас пока нет активных записей.' : 'В архиве пока ничего нет.',
             emptyAction: {url: path('app_appointment_new')|default('#'), label: 'Создать запись'},
             route: 'app_appointment_index',
             queryParams: app.request.query.all()

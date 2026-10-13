@@ -14,7 +14,6 @@ final class AppointmentRequest
     public ?int $service = null;
 
     #[Assert\NotBlank(message: 'Выберите место')]
-    #[Assert\Choice(callback: [AppointmentLocation::class, 'values'], message: 'Неверное место')]
     public ?AppointmentLocation $location = null;
 
     public ?string $address = null;
